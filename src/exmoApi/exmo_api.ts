@@ -1,6 +1,7 @@
 import * as CryptoJS from "crypto-js";
 import {Credentials, Limit, Pair, Quantity, Resolution, Time} from "../types/types";
 import {PairRequest} from "../types/requests";
+import dotenv from 'dotenv'
 import {
   CandlesHistoryResponse,
   CurrencyListExtendedResponse,
@@ -18,10 +19,12 @@ export class ExmoApi {
   private _url: string = 'https://api.exmo.com/v1/'
 
   constructor() {
+    dotenv.config()
     this._credentials = {
-      publicKey: process.env.PUBLIC_KEY||'.env PUBLIC_KEY = not found',
-      secretKey: process.env.SECRET_KEY||'.env SECRET_KEY = not found'
+      publicKey: process.env.EXMO_PUBLIC_KEY||'.env PUBLIC_KEY = not found',
+      secretKey: process.env.EXMO_SECRET_KEY||'.env SECRET_KEY = not found'
     }
+    console.log(this._credentials)
   }
 
   private sign = (message: string) => {
