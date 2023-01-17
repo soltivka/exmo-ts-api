@@ -32,5 +32,14 @@ describe('unauthorized api', () => {
 
   })
 
+  describe('currency-list-extended', () => {
+    const response = api.currencyListExtended()
+    test('response defined', () => {
+      return expect(response).toBeDefined()
+    })
+
+
+  })
+
 });
 

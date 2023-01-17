@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1673630418599" clover="3.2.0">
-  <project timestamp="1673630418599" name="All files">
-    <metrics statements="274" coveredstatements="180" conditionals="37" coveredconditionals="22" methods="32" coveredmethods="17" elements="343" coveredelements="219" complexity="0" loc="274" ncloc="274" packages="2" files="4" classes="4"/>
-    <package name="build.exmoApi">
+<coverage generated="1673944715666" clover="3.2.0">
+  <project timestamp="1673944715666" name="All files">
+    <metrics statements="274" coveredstatements="182" conditionals="38" coveredconditionals="23" methods="32" coveredmethods="18" elements="344" coveredelements="223" complexity="0" loc="274" ncloc="274" packages="2" files="4" classes="4"/>
+    <package name="build.src.exmoApi">
       <metrics statements="140" coveredstatements="95" conditionals="27" coveredconditionals="16" methods="19" coveredmethods="11"/>
-      <file name="connection.js" path="C:\prog\exmo-ts-api-2\build\exmoApi\connection.js">
+      <file name="connection.js" path="C:\prog\exmo-ts-api-2\build\src\exmoApi\connection.js">
         <metrics statements="8" coveredstatements="8" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="2" count="1" type="stmt"/>
@@ -15,7 +15,7 @@
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
       </file>
-      <file name="exmo_api.js" path="C:\prog\exmo-ts-api-2\build\exmoApi\exmo_api.js">
+      <file name="exmo_api.js" path="C:\prog\exmo-ts-api-2\build\src\exmoApi\exmo_api.js">
         <metrics statements="132" coveredstatements="87" conditionals="24" coveredconditionals="13" methods="17" coveredmethods="9"/>
         <line num="1" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="2" count="1" type="cond" truecount="1" falsecount="0"/>
@@ -152,7 +152,7 @@
       </file>
     </package>
     <package name="src.exmoApi">
-      <metrics statements="134" coveredstatements="85" conditionals="10" coveredconditionals="6" methods="13" coveredmethods="6"/>
+      <metrics statements="134" coveredstatements="87" conditionals="11" coveredconditionals="7" methods="13" coveredmethods="7"/>
       <file name="connection.ts" path="C:\prog\exmo-ts-api-2\src\exmoApi\connection.ts">
         <metrics statements="7" coveredstatements="7" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -164,7 +164,7 @@
         <line num="7" count="1" type="stmt"/>
       </file>
       <file name="exmo_api.ts" path="C:\prog\exmo-ts-api-2\src\exmoApi\exmo_api.ts">
-        <metrics statements="127" coveredstatements="78" conditionals="9" coveredconditionals="5" methods="12" coveredmethods="5"/>
+        <metrics statements="127" coveredstatements="80" conditionals="10" coveredconditionals="6" methods="12" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -195,26 +195,26 @@
         <line num="28" count="1" type="stmt"/>
         <line num="29" count="1" type="stmt"/>
         <line num="30" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
         <line num="34" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="37" count="2" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
-        <line num="39" count="2" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
-        <line num="41" count="2" type="stmt"/>
-        <line num="42" count="2" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
-        <line num="44" count="2" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
-        <line num="47" count="2" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
-        <line num="49" count="2" type="stmt"/>
-        <line num="50" count="2" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="49" count="3" type="stmt"/>
+        <line num="50" count="3" type="stmt"/>
         <line num="51" count="1" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
         <line num="53" count="0" type="stmt"/>
@@ -265,9 +265,9 @@
         <line num="98" count="1" type="stmt"/>
         <line num="99" count="1" type="stmt"/>
         <line num="100" count="1" type="stmt"/>
-        <line num="101" count="1" type="stmt"/>
-        <line num="102" count="0" type="stmt"/>
-        <line num="103" count="0" type="stmt"/>
+        <line num="101" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="102" count="1" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
         <line num="104" count="1" type="stmt"/>
         <line num="105" count="1" type="stmt"/>
         <line num="106" count="0" type="stmt"/>
