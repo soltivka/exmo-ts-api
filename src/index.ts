@@ -1,8 +1,9 @@
 import {connect} from "./exmoApi/connection";
 
 const api = connect()
+const pair = 'USDT_USD'
 
 
-api.currencyListExtended().then((response)=>{
+api.orderBook(pair).then((response)=>{
   console.log(response)
 })

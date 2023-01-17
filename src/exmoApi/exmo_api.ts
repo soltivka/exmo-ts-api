@@ -24,7 +24,6 @@ export class ExmoApi {
       publicKey: process.env.EXMO_PUBLIC_KEY||'.env PUBLIC_KEY = not found',
       secretKey: process.env.EXMO_SECRET_KEY||'.env SECRET_KEY = not found'
     }
-    console.log(this._credentials)
   }
 
   private sign = (message: string) => {
@@ -45,8 +44,10 @@ export class ExmoApi {
       }
     };
     if(withoutBody){
+      console.log(withoutBody)
       delete options.data;
     }
+    console.log(options)
     const result = (await axios(url, options)).data
     return result as T
   }
@@ -101,7 +102,7 @@ export class ExmoApi {
   }
 
   currencyListExtended = async (): Promise<CurrencyListExtendedResponse> => {
-    const response = await this.api_query<CurrencyListExtendedResponse>("currency/list/extended", {} ,'GET')
+    const response = await this.api_query<CurrencyListExtendedResponse>("currency/list/extended", {} ,'GET', true)
     return (response)
   }
 

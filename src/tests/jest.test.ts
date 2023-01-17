@@ -10,7 +10,7 @@ describe('unauthorized api', () => {
     test('response defined', () => {
       return expect(response).toBeDefined()
     })
-    test('', () => {
+    test('has given pair', () => {
       return expect(response).resolves.toHaveProperty(pair)
     });
   })
@@ -41,8 +41,12 @@ describe('unauthorized api', () => {
       return expect(response).resolves.toBeInstanceOf(Array)
     });
     test('contain currencies', () => {
-      const expected = [{description: 'US Dollar', name:'USD'}]
-      return expect(response).resolves.toMatchObject(expected);
+      const expected = {description: 'US Dollar', name:'USD'}
+      return expect(response).resolves.toEqual(
+        expect.arrayContaining([      // 2
+          expect.objectContaining(expected)
+        ])
+      )
     });
 
 
