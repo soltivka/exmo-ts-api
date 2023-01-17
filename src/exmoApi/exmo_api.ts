@@ -31,20 +31,22 @@ export class ExmoApi {
     return CryptoJS.HmacSHA512(message, this._credentials.secretKey).toString(CryptoJS.enc.Hex);
   }
 
-  private api_query = async <T>(method_name: string, data: any = {}, method:'GET'|'POST'='POST'): Promise<T> => {
+  private api_query = async <T>(method_name: string, data: any = {}, method:'GET'|'POST'='POST', withoutBody:boolean = false): Promise<T> => {
     data["nonce"] = Math.floor(new Date().getTime())
     const post_data = new URLSearchParams(data).toString();
     const url = this._url + method_name;
-    const options = {
+    const options:any = {
       method: method,
       url:url,
       headers: {
         'Key': this._credentials.publicKey,
         'Sign': this.sign(post_data),
         'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: new URLSearchParams(data)
+      }
     };
+    if(withoutBody){
+      delete options.data;
+    }
     const result = (await axios(url, options)).data
     return result as T
   }
@@ -99,7 +101,8 @@ export class ExmoApi {
   }
 
   currencyListExtended = async (): Promise<CurrencyListExtendedResponse> => {
-    return (await this.api_query<CurrencyListExtendedResponse>("currency/list/extended",undefined ,'GET'))
+    const response = await this.api_query<CurrencyListExtendedResponse>("currency/list/extended", {} ,'GET')
+    return (response)
   }
 
   requiredAmount = async (pair: Pair, quantity: Quantity): Promise<RequiredAmountResponse> => {

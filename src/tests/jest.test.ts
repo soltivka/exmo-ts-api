@@ -37,6 +37,13 @@ describe('unauthorized api', () => {
     test('response defined', () => {
       return expect(response).toBeDefined()
     })
+    test('array returned', () => {
+      return expect(response).resolves.toBeInstanceOf(Array)
+    });
+    test('contain currencies', () => {
+      const expected = [{description: 'US Dollar', name:'USD'}]
+      return expect(response).resolves.toMatchObject(expected);
+    });
 
 
   })
