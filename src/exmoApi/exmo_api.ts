@@ -1,8 +1,9 @@
 import * as CryptoJS from "crypto-js";
-import {Credentials, Limit, Pair, Quantity, Resolution, Time} from "../types/types";
+import {Credentials, Currency, Limit, Pair, Quantity, Resolution, Time} from "../types/types";
 import {PairRequest} from "../types/requests";
 import dotenv from 'dotenv'
 import {
+  CandlesHistoryNoDataResponse,
   CandlesHistoryResponse,
   CurrencyListExtendedResponse,
   CurrencyResponse, ExmoResponse,
@@ -21,33 +22,43 @@ export class ExmoApi {
   constructor() {
     dotenv.config()
     this._credentials = {
-      publicKey: process.env.EXMO_PUBLIC_KEY||'.env PUBLIC_KEY = not found',
-      secretKey: process.env.EXMO_SECRET_KEY||'.env SECRET_KEY = not found'
+      publicKey: process.env.EXMO_PUBLIC_KEY || '.env PUBLIC_KEY = not found',
+      secretKey: process.env.EXMO_SECRET_KEY || '.env SECRET_KEY = not found'
     }
+  }
+
+  private isAuthMethod = (methodName: string) => {
+    const authMethods = ['user_info', 'order_create', 'order_cancel', 'stop_market_order_create',
+      'stop_market_order_cancel', 'user_open_orders', 'user_trades', 'user_cancelled_orders', 'order_trades',
+      'deposit_address', 'withdraw_crypt']
+    return Boolean(authMethods.find((el)=>el===methodName))
   }
 
   private sign = (message: string) => {
     return CryptoJS.HmacSHA512(message, this._credentials.secretKey).toString(CryptoJS.enc.Hex);
   }
 
-  private api_query = async <T>(method_name: string, data: any = {}, method:'GET'|'POST'='POST', withoutBody:boolean = false): Promise<T> => {
-    data["nonce"] = Math.floor(new Date().getTime())
+
+  private api_query = async <T>(method_name: string, data: any = {}, method: 'GET' | 'POST' = 'POST', withBody: boolean = true): Promise<T> => {
+    if (this.isAuthMethod(method_name)) {
+      data["nonce"] = Math.floor(new Date().getTime())
+    }
+
     const post_data = new URLSearchParams(data).toString();
     const url = this._url + method_name;
-    const options:any = {
+    const options: any = {
       method: method,
-      url:url,
+      url: url,
       headers: {
         'Key': this._credentials.publicKey,
         'Sign': this.sign(post_data),
         'Content-Type': 'application/x-www-form-urlencoded'
-      }
+      },
+      data: new URLSearchParams(data)
     };
-    if(withoutBody){
-      console.log(withoutBody)
-      delete options.data;
+    if (withBody) {
+      options.data = new URLSearchParams(data)
     }
-    console.log(options)
     const result = (await axios(url, options)).data
     return result as T
   }
@@ -102,7 +113,7 @@ export class ExmoApi {
   }
 
   currencyListExtended = async (): Promise<CurrencyListExtendedResponse> => {
-    const response = await this.api_query<CurrencyListExtendedResponse>("currency/list/extended", {} ,'GET', true)
+    const response = await this.api_query<CurrencyListExtendedResponse>("currency/list/extended", {}, 'GET', false)
     return (response)
   }
 
@@ -114,18 +125,24 @@ export class ExmoApi {
     return (await this.api_query<RequiredAmountResponse>("required_amount", request))
   }
 
-  candlesHistory = async (pair: Pair, from: Time, to: Time, resolution: Resolution='30'): Promise<CandlesHistoryResponse> => {
+  candlesHistory = async (pair: Pair, from: Time, to: Time, resolution: Resolution = '30'): Promise<CandlesHistoryResponse | CandlesHistoryNoDataResponse> => {
     const request = {
       symbol: pair,
       resolution: resolution,
       from: from,
       to: to,
     }
-    return (await this.api_query<CandlesHistoryResponse>("required_amount", request,'GET'))
+    const searchParams = new URLSearchParams(request)
+    const url = "candles_history?" + searchParams
+    const response = await this.api_query<any>(url, {}, 'GET');
+    if (response.s) {
+      return response as CandlesHistoryNoDataResponse
+    }
+    return response as CandlesHistoryResponse
   }
 
-  paymentProviderCryptoList = async (pair: Pair, from: Time, to: Time, resolution?: Resolution): Promise<PaymentProviderCryptoListResponse> => {
-    return (await this.api_query<PaymentProviderCryptoListResponse>("payments_providers_crypto_list", undefined, 'GET'))
+  paymentProviderCryptoList = async (): Promise<PaymentProviderCryptoListResponse> => {
+    return await this.api_query<PaymentProviderCryptoListResponse>("payments/providers/crypto/list", undefined, 'GET', false)
   }
 
 }

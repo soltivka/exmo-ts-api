@@ -1,9 +1,8 @@
 import {connect} from "./exmoApi/connection";
 
 const api = connect()
-const pair = 'USDT_USD'
+const pair = 'BTC_USD'
+const time = Math.round(Date.now()/1000)
 
-
-api.orderBook(pair).then((response)=>{
-  console.log(response)
-})
+const response = api.paymentProviderCryptoList()
+response.then((data)=>{console.log(data)})

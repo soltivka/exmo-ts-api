@@ -96,9 +96,15 @@ export type Candle = {
 
 }
 
+export interface CandlesHistoryNoDataResponse{
+  s:string,
+  nextTime:number,
+}
+
 export interface CandlesHistoryResponse{
   candles: Candle[],
 }
+
 
 export type CryptoProvider = {
   "type": "deposit" | "withdraw", //provider method type, withdrawal or deposit
@@ -114,5 +120,5 @@ export type CryptoProvider = {
 
 //payments_providers_crypto_list
 export interface PaymentProviderCryptoListResponse{
-  [key: Pair]: CryptoProvider,
+  [key: Currency]: CryptoProvider,
 }
