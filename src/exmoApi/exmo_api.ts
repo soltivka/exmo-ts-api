@@ -14,7 +14,6 @@ import {
 } from "../types/responses";
 import axios from "axios";
 
-
 export class ExmoApi {
   private _credentials: Credentials
   private _url: string = 'https://api.exmo.com/v1.1/'
