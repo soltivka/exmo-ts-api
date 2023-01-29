@@ -1,3 +1,5 @@
+import {OrderType} from "./requests";
+
 export type PublicKey = string
 export type SecretKey = string
 
@@ -20,7 +22,6 @@ export type OrderId = number;
 export type Time = string
 
 /** .type */
-export type OrderType = "buy" | "sell"
 
 /** discreteness of candles, possible values:  */
 export type Resolution = '1'| '5'|'15'| '30'| '45'| '60'| '120'| '180'| '240'| 'D'| 'W'| 'M'

@@ -4,3 +4,7 @@ coverage
 /coverage.data
 /coverage/
 build
+hooks
+HEAD
+description
+config

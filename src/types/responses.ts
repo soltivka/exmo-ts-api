@@ -1,4 +1,5 @@
-import {Amount, Currency, Pair, Price, Quantity, Time, Trade} from "./types";
+import {Amount, Currency, OrderId, Pair, Price, Quantity, Time, Trade} from "./types";
+import {OrderType, StopMarketOrderCreateRequest} from "./requests";
 
 export type ExmoResponse<T> = {
   data:T,
@@ -121,4 +122,86 @@ export type CryptoProvider = {
 //payments_providers_crypto_list
 export interface PaymentProviderCryptoListResponse{
   [key: Currency]: CryptoProvider,
+}
+
+export interface OrderCreateResponse {
+  "result": boolean,
+  "error": string,
+  "order_id": number,
+  "client_id": number
+}
+
+export interface OrderCancelResponse {
+  "result": boolean,
+  "error": string
+}
+export interface StopMarketOrderCreateResponse {
+  "client_id": number,
+  "parent_order_id": number,
+  "parent_order_id_str": string
+}
+export interface OpenOrder {
+  "parent_order_id"?: string,
+  "trigger_price"?: Price,
+  "order_id"?: OrderId,
+  "client_id"?: number,
+  "created": Time,
+  "type": OrderType,
+  "pair": Pair,
+  "price"?: Price,
+  "quantity": Quantity,
+  "amount": Amount
+
+}
+
+export interface UserOpenOrdersResponse {
+  [key: Pair]:OpenOrder[]
+}
+
+export interface UserTrade{
+  "trade_id": number,
+  "client_id": number,
+  "date": Time,
+  "type": OrderType,
+  "pair": Pair,
+  "quantity": Quantity,
+  "price": Price,
+  "amount": Amount,
+  "order_id": OrderId,
+  "parent_order_id": OrderId,
+  "exec_type": 'taker'|'maker',
+  "commission_amount": Price,
+  "commission_currency": Currency,
+  "commission_percent": string
+}
+
+export interface UserTradesResponse {
+  [key: Pair]:UserTrade[]
+}
+
+export interface UserCanceledOrder {
+  "order_id"?: OrderId,
+  "client_id": number,
+  "created": Time,
+  "type": OrderType,
+  "pair": Pair,
+  "quantity": Quantity,
+  "price"?: Price,
+  "amount": Amount,
+  "parent_order_id"?: OrderId,
+  "trigger_price"?: Price,
+  "reason_status"?: string
+}
+
+export interface UserCanceledOrdersResponse {
+  [key: Pair]:UserCanceledOrder[]
+}
+
+export interface OrderTradesResponse {
+  "type": OrderType,
+  "in_currency": Currency,
+  "in_amount": Quantity,
+  "out_currency": Currency,
+  "out_amount": Amount,
+  "trades": UserTrade[],
 }

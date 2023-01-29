@@ -1,16 +1,16 @@
 import * as CryptoJS from "crypto-js";
-import {Credentials, Currency, Limit, Pair, Quantity, Resolution, Time} from "../types/types";
-import {PairRequest} from "../types/requests";
+import {Credentials, Currency, Limit, OrderId, Pair, Quantity, Resolution, Time} from "../types/types";
+import {OrderCreateRequest, PairRequest, StopMarketOrderCreateRequest} from "../types/requests";
 import dotenv from 'dotenv'
 import {
   CandlesHistoryNoDataResponse,
   CandlesHistoryResponse,
   CurrencyListExtendedResponse,
   CurrencyResponse, ExmoResponse,
-  OrderBookResponse,
-  PairSettingsResponse, PaymentProviderCryptoListResponse, RequiredAmountResponse,
+  OrderBookResponse, OrderCancelResponse, OrderCreateResponse, OrderTradesResponse,
+  PairSettingsResponse, PaymentProviderCryptoListResponse, RequiredAmountResponse, StopMarketOrderCreateResponse,
   TickerResponse,
-  TradesResponse
+  TradesResponse, UserCanceledOrdersResponse, UserOpenOrdersResponse, UserTradesResponse
 } from "../types/responses";
 import axios from "axios";
 
@@ -24,7 +24,9 @@ export class ExmoApi {
       publicKey: process.env.EXMO_PUBLIC_KEY || '.env PUBLIC_KEY = not found',
       secretKey: process.env.EXMO_SECRET_KEY || '.env SECRET_KEY = not found'
     }
+    console.log(this._credentials)
   }
+
 
   private isAuthMethod = (methodName: string) => {
     const authMethods = ['user_info', 'order_create', 'order_cancel', 'stop_market_order_create',
@@ -142,6 +144,48 @@ export class ExmoApi {
 
   paymentProviderCryptoList = async (): Promise<PaymentProviderCryptoListResponse> => {
     return await this.api_query<PaymentProviderCryptoListResponse>("payments/providers/crypto/list", undefined, 'GET', false)
+  }
+
+  //Authenticated API
+
+  orderCreate = async (request:OrderCreateRequest): Promise<OrderCreateResponse> => {
+    return (await this.api_query<OrderCreateResponse>("order_create", request))
+  }
+
+  orderCancel = async (orderId:OrderId): Promise<OrderCancelResponse> => {
+    const request = {
+      order_id:orderId
+    }
+    return (await this.api_query<OrderCancelResponse>("order_cancel", request))
+  }
+
+  stopMarketOrderCreate = async (request:StopMarketOrderCreateRequest): Promise<StopMarketOrderCreateResponse> => {
+    return (await this.api_query<StopMarketOrderCreateResponse>("stop_market_order_create", request))
+  }
+
+  stopMarketOrderCancel = async (parentOrderId:number|string): Promise<{}> => {
+    const request = {
+      parent_order_id:parentOrderId
+    }
+    return (await this.api_query<{}>("stop_market_order_cancel", request))
+  }
+
+  userOpenOrders = async (pair:Pair): Promise<UserOpenOrdersResponse> => {
+    return (await this.api_query<UserOpenOrdersResponse>("user_open_orders", {pair:pair}))
+  }
+
+  userTrades = async (pair:Pair, limit:number=100, offset:number=0): Promise<UserTradesResponse> => {
+    return (await this.api_query<UserTradesResponse>("user_trades", {
+      pair:pair,
+      limit:limit,
+      offset:offset,
+    }))
+  }
+
+  orderTrades = async (orderId:OrderId): Promise<OrderTradesResponse> => {
+    return (await this.api_query<OrderTradesResponse>("order_trades", {
+      order_id:orderId
+    }))
   }
 
 }
