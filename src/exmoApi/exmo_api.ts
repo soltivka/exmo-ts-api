@@ -18,13 +18,8 @@ export class ExmoApi {
   private _credentials: Credentials
   private _url: string = 'https://api.exmo.com/v1.1/'
 
-  constructor() {
-    dotenv.config()
-    this._credentials = {
-      publicKey: process.env.EXMO_PUBLIC_KEY || '.env PUBLIC_KEY = not found',
-      secretKey: process.env.EXMO_SECRET_KEY || '.env SECRET_KEY = not found'
-    }
-    console.log(this._credentials)
+  constructor(credentials:Credentials={publicKey:'', secretKey:''}) {
+    this._credentials = credentials
   }
 
 

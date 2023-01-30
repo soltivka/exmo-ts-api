@@ -1,7 +1,7 @@
 import {describe, expect, test} from '@jest/globals';
-import {connect} from "../exmoApi/connection";
+import {ExmoApi} from "../exmoApi/exmo_api";
 
-const api = connect()
+const api = new ExmoApi()
 const time = Math.round(Date.now() / 1000)
 const pair = 'BTC_USD'
 
