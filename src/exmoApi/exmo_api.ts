@@ -1,13 +1,11 @@
 import * as CryptoJS from "crypto-js";
-import {Credentials, Currency, Limit, OrderId, Pair, Quantity, Resolution, Time} from "../types/types";
+import {Credentials, Limit, OrderId, Pair, Quantity, Resolution, Time} from "../types/types";
 import {OrderCreateRequest, PairRequest, StopMarketOrderCreateRequest} from "../types/requests";
-import dotenv from 'dotenv'
 import {
   CandlesHistoryNoDataResponse,
   CandlesHistoryResponse,
   CurrencyListExtendedResponse,
   CurrencyResponse,
-  ExmoResponse,
   OrderBookResponse,
   OrderCancelResponse,
   OrderCreateResponse,
@@ -18,7 +16,6 @@ import {
   StopMarketOrderCreateResponse,
   TickerResponse,
   TradesResponse,
-  UserCanceledOrdersResponse,
   UserCancelledOrdersResponse,
   UserInfoResponse,
   UserOpenOrdersResponse,
@@ -68,6 +65,9 @@ export class ExmoApi {
       options.data = new URLSearchParams(data)
     }
     const result = (await axios(url, options)).data
+    if(result.error){
+      throw new Error(result.error)
+    }
     return result as T
   }
   //Public API

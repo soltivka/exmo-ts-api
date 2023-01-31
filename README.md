@@ -132,6 +132,7 @@ api.paymentProviderCryptoList().then((response) => {
 ### Authenticated API methods:
 
 * user_info
+
 ```js
 api.userInfo().then((response) => {
 
@@ -139,6 +140,7 @@ api.userInfo().then((response) => {
 ```
 
 * order_create
+
 ```js
 const request = {
     pair: 'BTC_USD',
@@ -153,6 +155,7 @@ api.orderCreate(request).then((response) => {
 ```
 
 * order_cancel
+
 ```js
 const orderId = 10525
 api.orderCancel(orderId).then((response) => {
@@ -161,6 +164,7 @@ api.orderCancel(orderId).then((response) => {
 ```
 
 * stop_market_order_create
+
 ```js
 const request = {
     pair: 'BTC_USD',
@@ -175,6 +179,7 @@ api.stopMarketOrderCreate(request).then((response) => {
 ```
 
 * stop_market_order_cancel
+
 ```js
 const parentOrderId = 507056272792275327
 api.stopMarketOrderCancel(parentOrderId).then((response) => {
@@ -183,6 +188,7 @@ api.stopMarketOrderCancel(parentOrderId).then((response) => {
 ```
 
 * user_open_orders
+
 ```js
 const pair = 'BTC_USD'
 api.userOpenOrders(pair).then((response) => {
@@ -191,6 +197,7 @@ api.userOpenOrders(pair).then((response) => {
 ```
 
 * user_trades
+
 ```js
 const pair = 'BTC_USD';
 const limit = 100; //the number of returned deals (default: 100, maximum: 100)
@@ -201,6 +208,7 @@ api.userTrades(pair, limit, offset).then((response) => {
 ```
 
 * user_cancelled_orders
+
 ```js
 const limit = 100; //the number of returned deals (default: 100, maximum: 10 000)
 const offset = 0; //last deal offset (default: 0)
@@ -210,6 +218,7 @@ api.userCancelledOrders(limit, offset).then((response) => {
 ```
 
 * order_trades
+
 ```js
 const orderId = 12345
 api.orderTrades(orderId).then((response) => {
@@ -229,5 +238,20 @@ async function yourFunction() {
     const response = await api.currency()
     //your code
 }
+
+```
+
+* error-throwing
+
+Throws error, when the response is 200, but contains result : false.
+This eliminates the need to make unnecessary checks on the content of the response, allows you to catch such requests through .catch block
+
+```json
+
+{
+  "result": false,
+  "error": "Error 40003: Authorization error, http header 'Key' not specified"
+}
+
 
 ```

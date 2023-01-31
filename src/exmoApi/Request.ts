@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import {checkResult} from "./requestResultChecker";
 
 export type  RequestCapsule = <T>() => Promise<T>
