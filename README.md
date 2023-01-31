@@ -30,7 +30,8 @@ const api = new ExmoApi()
 
 The library implements all endpoints from the official Exmo documentation that are Public Api or Authenticated Api.
 
-Official Exmo documentation used to build this project: [exmo-docs]
+Official Exmo documentation used to build this project: [Exmo API
+](https://documenter.getpostman.com/view/10287440/SzYXWKPi)
 
 ### Public API methods:
 
@@ -121,6 +122,7 @@ api.candlesHistory(pair, from, to, resolution).then((response) => {
 ```
 
 * payments_providers_crypto_list
+
 ```js
 api.paymentProviderCryptoList().then((response) => {
 
@@ -128,15 +130,102 @@ api.paymentProviderCryptoList().then((response) => {
 ```
 
 ### Authenticated API methods:
-....coming soon
+
+* user_info
+```js
+api.userInfo().then((response) => {
+
+})
+```
+
+* order_create
+```js
+const request = {
+    pair: 'BTC_USD',
+    quantity: 3,
+    price: '40499.2',
+    type: "buy",
+    client_id: 100500
+}
+api.orderCreate(request).then((response) => {
+
+})
+```
+
+* order_cancel
+```js
+const orderId = 10525
+api.orderCancel(orderId).then((response) => {
+
+})
+```
+
+* stop_market_order_create
+```js
+const request = {
+    pair: 'BTC_USD',
+    quantity: '10.1',
+    trigger_price: '85000',
+    type: 'sell',
+    client_id: 100500
+}
+api.stopMarketOrderCreate(request).then((response) => {
+
+})
+```
+
+* stop_market_order_cancel
+```js
+const parentOrderId = 507056272792275327
+api.stopMarketOrderCancel(parentOrderId).then((response) => {
+
+})
+```
+
+* user_open_orders
+```js
+const pair = 'BTC_USD'
+api.userOpenOrders(pair).then((response) => {
+
+})
+```
+
+* user_trades
+```js
+const pair = 'BTC_USD';
+const limit = 100; //the number of returned deals (default: 100, maximum: 100)
+const offset = 0; //last deal offset (default: 0)
+api.userTrades(pair, limit, offset).then((response) => {
+
+})
+```
+
+* user_cancelled_orders
+```js
+const limit = 100; //the number of returned deals (default: 100, maximum: 10 000)
+const offset = 0; //last deal offset (default: 0)
+api.userCancelledOrders(limit, offset).then((response) => {
+
+})
+```
+
+* order_trades
+```js
+const orderId = 12345
+api.orderTrades(orderId).then((response) => {
+
+})
+```
 
 # Features
+
 * async-await
 
-All methods return plain promises, so you can use the await keyword in async functions if needed, for example : 
+All methods return plain promises, so you can use the await keyword in async functions if needed, for example :
+
 ```js
 
-async function yourFunction (){
+async function yourFunction() {
     const response = await api.currency()
     //your code
 }
