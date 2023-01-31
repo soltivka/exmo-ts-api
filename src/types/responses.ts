@@ -205,3 +205,18 @@ export interface OrderTradesResponse {
   "out_amount": Amount,
   "trades": UserTrade[],
 }
+
+export interface UserInfoResponse {
+  "uid": number,
+  "server_date": Time,
+  "balances": {
+    [key:Currency]: Quantity,
+  },
+  "reserved": {
+    [key:Currency]: Quantity,
+  }
+}
+
+export interface UserCancelledOrdersResponse {
+  [key:Pair]:UserTrade[]
+}

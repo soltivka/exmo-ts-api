@@ -6,11 +6,23 @@ import {
   CandlesHistoryNoDataResponse,
   CandlesHistoryResponse,
   CurrencyListExtendedResponse,
-  CurrencyResponse, ExmoResponse,
-  OrderBookResponse, OrderCancelResponse, OrderCreateResponse, OrderTradesResponse,
-  PairSettingsResponse, PaymentProviderCryptoListResponse, RequiredAmountResponse, StopMarketOrderCreateResponse,
+  CurrencyResponse,
+  ExmoResponse,
+  OrderBookResponse,
+  OrderCancelResponse,
+  OrderCreateResponse,
+  OrderTradesResponse,
+  PairSettingsResponse,
+  PaymentProviderCryptoListResponse,
+  RequiredAmountResponse,
+  StopMarketOrderCreateResponse,
   TickerResponse,
-  TradesResponse, UserCanceledOrdersResponse, UserOpenOrdersResponse, UserTradesResponse
+  TradesResponse,
+  UserCanceledOrdersResponse,
+  UserCancelledOrdersResponse,
+  UserInfoResponse,
+  UserOpenOrdersResponse,
+  UserTradesResponse
 } from "../types/responses";
 import axios from "axios";
 
@@ -143,6 +155,10 @@ export class ExmoApi {
 
   //Authenticated API
 
+  userInfo = async (): Promise<UserInfoResponse> => {
+    return (await this.api_query<UserInfoResponse>("user_info", {}))
+  }
+
   orderCreate = async (request:OrderCreateRequest): Promise<OrderCreateResponse> => {
     return (await this.api_query<OrderCreateResponse>("order_create", request))
   }
@@ -165,8 +181,16 @@ export class ExmoApi {
     return (await this.api_query<{}>("stop_market_order_cancel", request))
   }
 
-  userOpenOrders = async (pair:Pair): Promise<UserOpenOrdersResponse> => {
-    return (await this.api_query<UserOpenOrdersResponse>("user_open_orders", {pair:pair}))
+  userOpenOrders = async (pair:Pair,limit:number=100, offset:number=0 ): Promise<UserOpenOrdersResponse> => {
+    return (await this.api_query<UserOpenOrdersResponse>("user_open_orders", {
+      pair , limit, offset
+    }))
+  }
+
+  userCancelledOrders = async (limit:number=100, offset:number=0): Promise<UserCancelledOrdersResponse> => {
+    return (await this.api_query<UserCancelledOrdersResponse>("user_cancelled_orders", {
+      limit, offset
+    }))
   }
 
   userTrades = async (pair:Pair, limit:number=100, offset:number=0): Promise<UserTradesResponse> => {
