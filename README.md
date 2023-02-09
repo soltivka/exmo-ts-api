@@ -244,14 +244,18 @@ async function yourFunction() {
 * error-throwing
 
 Throws error, when the response is 200, but contains result : false.
-This eliminates the need to make unnecessary checks on the content of the response, allows you to catch such requests through .catch block
+This eliminates the need to make unnecessary checks on the content of the response, allows you to catch such requests
+through .catch block
 
-```json
+```js
 
-{
-  "result": false,
-  "error": "Error 40003: Authorization error, http header 'Key' not specified"
-}
-
+api.orderCancel(100).then((response) => {
+//do something
+}).catch((e) => {
+    // error response example : {
+    //     "result": false,
+    //     "error": "Error 40003: Authorization error, http header 'Key' not specified"
+    // }
+})
 
 ```

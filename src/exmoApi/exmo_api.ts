@@ -181,9 +181,9 @@ export class ExmoApi {
     return (await this.api_query<{}>("stop_market_order_cancel", request))
   }
 
-  userOpenOrders = async (pair:Pair,limit:number=100, offset:number=0 ): Promise<UserOpenOrdersResponse> => {
+  userOpenOrders = async (pair:Pair ): Promise<UserOpenOrdersResponse> => {
     return (await this.api_query<UserOpenOrdersResponse>("user_open_orders", {
-      pair , limit, offset
+      pair
     }))
   }
 
