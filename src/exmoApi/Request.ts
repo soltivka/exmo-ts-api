@@ -1,5 +1,3 @@
-import {checkResult} from "./requestResultChecker";
-
 export type  RequestCapsule = <T>() => Promise<T>
 
 
@@ -8,11 +6,10 @@ export class Request {
   private isRuning: boolean = false
   public timeout = 10
   // todo check for function return type
-  private addToQueue = (capsule: RequestCapsule): any => {
+  private addToQueue = (capsule: RequestCapsule): Promise<unknown> => {
     return new Promise((resolve) => {
       const toCallFunction = async () => {
         const result = await capsule()
-        checkResult(result)
         resolve(result)
       }
       this._requests.push(toCallFunction)
@@ -46,8 +43,9 @@ export class Request {
   }
 
   init = async (capsule: RequestCapsule) => {
-    this.addToQueue(capsule)
+    const returnPromise = this.addToQueue(capsule)
     if(!this.isRuning){this.runQueue()}
+    return returnPromise
   }
 }
 
