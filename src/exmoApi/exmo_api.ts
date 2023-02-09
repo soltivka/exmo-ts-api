@@ -22,15 +22,23 @@ import {
   UserTradesResponse
 } from "../types/responses";
 import axios from "axios";
+import Request from "./Request";
 
 export class ExmoApi {
   private _credentials: Credentials
   private _url: string = 'https://api.exmo.com/v1.1/'
+  private sender = new Request()
+  private requestTimeout:number;
 
   constructor(credentials:Credentials={publicKey:'', secretKey:''}) {
     this._credentials = credentials
+    this.requestTimeout=0;
   }
 
+  setRequestTimeout = (ms:number)=>{
+    this.sender.setTimeout(ms)
+    this.requestTimeout = ms
+  }
 
   private isAuthMethod = (methodName: string) => {
     const authMethods = ['user_info', 'order_create', 'order_cancel', 'stop_market_order_create',
@@ -64,7 +72,12 @@ export class ExmoApi {
     if (withBody) {
       options.data = new URLSearchParams(data)
     }
-    const result = (await axios(url, options)).data
+    let result;
+    if(this.requestTimeout){
+      result = await (this.sender.init(async ()=>(await axios(url, options)).data))
+    }else{
+      result = (await axios(url, options)).data
+    }
     if(result.error){
       throw new Error(result.error)
     }

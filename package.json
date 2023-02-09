@@ -1,6 +1,6 @@
 {
   "name": "exmo-ts-api",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "exmo-api",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

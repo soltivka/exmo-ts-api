@@ -259,3 +259,7 @@ api.orderCancel(100).then((response) => {
 })
 
 ```
+
+* handling nonce error
+  If you send a large number of requests at the same time, you may encounter the following error: "Error: 40009: The nonce parameter is less or equal than what was used before "1675941974570"
+  ". This happens when multiple requests are sent within 1ms, or if the request that was sent later is processed by the server before the request that was sent before it.
