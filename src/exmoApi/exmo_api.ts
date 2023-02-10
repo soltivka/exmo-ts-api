@@ -50,11 +50,17 @@ export class ExmoApi {
   private sign = (message: string) => {
     return CryptoJS.HmacSHA512(message, this._credentials.secretKey).toString(CryptoJS.enc.Hex);
   }
+  private nonce=0
 
 
   private api_query = async <T>(method_name: string, data: any = {}, method: 'GET' | 'POST' = 'POST', withBody: boolean = true): Promise<T> => {
     if (this.isAuthMethod(method_name)) {
-      data["nonce"] = Math.floor(new Date().getTime())
+      let nonce = Math.floor(new Date().getTime())
+      if(nonce <= this.nonce){
+        nonce=this.nonce+1
+        this.nonce=nonce
+      }
+      data["nonce"] = nonce
     }
 
     const post_data = new URLSearchParams(data).toString();
