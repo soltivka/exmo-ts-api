@@ -28,16 +28,15 @@ export class ExmoApi {
   private _credentials: Credentials
   private _url: string = 'https://api.exmo.com/v1.1/'
   private sender = new Request()
-  private requestTimeout:number;
+  private requestsSchedule:boolean;
 
   constructor(credentials:Credentials={publicKey:'', secretKey:''}) {
     this._credentials = credentials
-    this.requestTimeout=0;
+    this.requestsSchedule=false
   }
 
-  setRequestTimeout = (ms:number)=>{
-    this.sender.setTimeout(ms)
-    this.requestTimeout = ms
+  requestsScheduleOn = (on:boolean)=>{
+    this.requestsSchedule = on
   }
 
   private isAuthMethod = (methodName: string) => {
@@ -79,7 +78,7 @@ export class ExmoApi {
       options.data = new URLSearchParams(data)
     }
     let result;
-    if(this.requestTimeout){
+    if(this.requestsSchedule){
       result = await (this.sender.init(async ()=>(await axios(url, options)).data))
     }else{
       result = (await axios(url, options)).data
