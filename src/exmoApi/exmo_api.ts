@@ -58,8 +58,8 @@ export class ExmoApi {
       let nonce = Math.floor(new Date().getTime())
       if(nonce <= this.nonce){
         nonce=this.nonce+1
-        this.nonce=nonce
       }
+      this.nonce=nonce
       data["nonce"] = nonce
     }
 
