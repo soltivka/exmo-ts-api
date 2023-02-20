@@ -1,15 +1,5 @@
 import {Amount, Currency, OrderId, Pair, Price, Quantity, Time, Trade} from "./types";
-import {OrderType, StopMarketOrderCreateRequest} from "./requests";
-
-export type ExmoResponse<T> = {
-  data:T,
-}
-
-export type OrderCreationResponse = {
-  result: boolean,
-  error: string,
-  order_id: number
-}
+import {OrderType} from "./requests";
 
 //trades
 export interface TradesResponse {
@@ -128,7 +118,7 @@ export interface OrderCreateResponse {
   "result": boolean,
   "error": string,
   "order_id": number,
-  "client_id": number
+  "client_id": number|string
 }
 
 export interface OrderCancelResponse {
@@ -136,7 +126,7 @@ export interface OrderCancelResponse {
   "error": string
 }
 export interface StopMarketOrderCreateResponse {
-  "client_id": number,
+  "client_id": number|string,
   "parent_order_id": number,
   "parent_order_id_str": string
 }
@@ -144,7 +134,7 @@ export interface OpenOrder {
   "parent_order_id"?: string,
   "trigger_price"?: Price,
   "order_id"?: OrderId,
-  "client_id"?: number,
+  "client_id"?: number|string,
   "created": Time,
   "type": OrderType,
   "pair": Pair,
@@ -160,7 +150,7 @@ export interface UserOpenOrdersResponse {
 
 export interface UserTrade{
   "trade_id": number,
-  "client_id": number,
+  "client_id": number|string,
   "date": Time,
   "type": OrderType,
   "pair": Pair,
@@ -179,9 +169,14 @@ export interface UserTradesResponse {
   [key: Pair]:UserTrade[]
 }
 
+
+export interface UserCancelledOrdersResponse {
+  [key:Pair]:UserCanceledOrder[]
+}
+
 export interface UserCanceledOrder {
   "order_id"?: OrderId,
-  "client_id": number,
+  "client_id": number|string,
   "created": Time,
   "type": OrderType,
   "pair": Pair,
@@ -191,10 +186,6 @@ export interface UserCanceledOrder {
   "parent_order_id"?: OrderId,
   "trigger_price"?: Price,
   "reason_status"?: string
-}
-
-export interface UserCanceledOrdersResponse {
-  [key: Pair]:UserCanceledOrder[]
 }
 
 export interface OrderTradesResponse {
@@ -215,8 +206,4 @@ export interface UserInfoResponse {
   "reserved": {
     [key:Currency]: Quantity,
   }
-}
-
-export interface UserCancelledOrdersResponse {
-  [key:Pair]:UserTrade[]
 }

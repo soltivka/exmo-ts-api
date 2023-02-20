@@ -41,18 +41,6 @@ export type Amount = string
 /** .price e.g. '1.0102'*/
 export type Price = string
 
-/** interface of order, that returns from exmo API*/
-export interface Order {
-  order_id: OrderId,
-  created: Time,
-  client_id: string|number,
-  type: OrderType,
-  pair: Pair,
-  quantity: Quantity,
-  price: Price,
-  amount: Amount
-}
-
 export type Trade = {
   "trade_id": number
   "type": OrderType

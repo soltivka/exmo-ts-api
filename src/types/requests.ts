@@ -9,13 +9,13 @@ export type OrderCreateRequest = {
   quantity: Quantity,
   price: Price,
   type: OrderType,
-  client_id?: number,
+  client_id?: number|string,
 }
 export type StopMarketOrderCreateRequest = {
   pair: Pair,
   quantity: Quantity,
   trigger_price: Price
   type: 'sell' | 'buy',
-  client_id?: number
+  client_id?: number|string
 }
 
