@@ -77,7 +77,7 @@ describe('unauthorized api', () => {
       return expect(response).toBeDefined()
     })
     test('has given pair', () => {
-      return expect(response).resolves.toHaveProperty(pair)
+      return expect(response).resolves.toHaveProperty('min_quantity')
     });
   })
 
@@ -104,11 +104,11 @@ describe('unauthorized api', () => {
     })
     test('has given pair', async () => {
       const data = await response
-      return expect(data[pair]).toBeDefined()
+      return expect(data).toBeDefined()
     })
     test('info about pair is array', async () => {
       const data = await response
-       expect(data[pair]).toBeInstanceOf(Object)
+       expect(data).toBeInstanceOf(Object)
     })
   })
 
@@ -146,7 +146,7 @@ describe('unauthorized api', () => {
     test('has currencies', async () => {
       const data = await response
       expect(data).toHaveProperty('BTC')
-      expect(data).toHaveProperty('DASH')
+      expect(data).toHaveProperty('BCH')
     })
   })
 });

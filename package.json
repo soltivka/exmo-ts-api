@@ -1,6 +1,6 @@
 {
   "name": "exmo-ts-api",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "exmo-api",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,6 +10,7 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/src/index.js",
+    "publish": "npm run start && npm publish",
     "test": "jest"
   },
   "author": "soltivka@gmail.com",

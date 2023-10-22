@@ -108,30 +108,20 @@ export class ExmoApi {
     return (await this.api_query<OrderBookResponse>("order_book", request))
   }
 
-  ticker = async (pair?: Pair | Pair[]): Promise<TickerResponse> => {
+  ticker = async (pair?: Pair): Promise<TickerResponse> => {
     const response = (await this.api_query<TickerResponse>("ticker"))
     if (!pair) {
       return response
     }
-    if (pair instanceof Array) {
-      return pair.reduce((prev, curr) => {
-        return {...prev, [curr]: response[curr]}
-      }, {})
-    }
-    return {[pair]: response[pair]}
+    return response[pair as keyof TickerResponse] as TickerResponse
   }
 
-  pairSettings = async (pair?: Pair | Pair[]): Promise<PairSettingsResponse> => {
+  pairSettings = async (pair?: Pair ): Promise<PairSettingsResponse> => {
     const response = (await this.api_query<PairSettingsResponse>("pair_settings"))
     if (!pair) {
       return response
     }
-    if (pair instanceof Array) {
-      return pair.reduce((prev, curr) => {
-        return {...prev, [curr]: response[curr]}
-      }, {})
-    }
-    return {[pair]: response[pair]}
+    return response[pair as keyof PairSettingsResponse] as PairSettingsResponse
   }
 
   currency = async (): Promise<CurrencyResponse> => {
